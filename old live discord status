@@ -1,0 +1,76 @@
+const express = require('express');
+  const app = express();
+
+    app.get('/', (req, res) => {
+        res.send('working');
+    });
+
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+        console.log('Server is running on port ' + PORT);
+    });
+
+const Discord = require('discord.js-selfbot-v13'); 
+ const client = new Discord.Client({ 
+     checkUpdate: false 
+ }); 
+
+ let startTimestamp = Date.now(); 
+ client.on('ready', () => {
+    console.log('Ready!');
+    updatePresence();
+});
+
+const keep_alive = require('./keep_alive.js')
+
+
+ APPID = "1144728247775526977"
+ NAME = "testing if this is still working" // you can put anything here
+ state = "I need to update this shit" // state 
+ largeimage = "https://media.discordapp.net/attachments/1155719263202578432/1166210012146839644/035bfff8748a9804ec66d716e601b69f.jpg?ex=6549a8b6&is=653733b6&hm=76dc0b11c9fe3e01a9e52a5ec7dc8d1d15c5cdf67627f53680303b90addc7e4e&" // image link 
+ largeimagetext = "what is this? Who knows" //text below state 
+ small_image = "https://media.discordapp.net/attachments/1155719263202578432/1166200196208799794/4db22afc82732d1abc0d5ace409973c4.gif?ex=65499f91&is=65372a91&hm=7e3e25270c6379ae3c1d8f0348c05b99ba42da02acc04a8351ba3e8c9d7cd7a8&" //small image, remove this with .setAssetSmallImage below if you dont want 🙂 
+ button_name1 = "Do not click this" 
+ button_name2 = "You can click this"
+ button_link1 = "https://www.youtube.com/@epgi"//button link 
+ button_link2 = "https://youtu.be/Z3J_MCbwaJ0?si=C5HLyqxw6jaUhiPA"//button link
+ const messages = [
+    
+    "testing if this is still working",
+  
+    // Add more messages as needed
+];
+
+let messageIndex = 0;
+ async function updatePresence() { 
+   try { 
+
+     const rpc = new Discord.RichPresence()
+         .setApplicationId(APPID) 
+         .setType('STREAMING') 
+ .setURL("https://youtu.be/Oka5WfMHnuU?si=OPg1D19Fe91g9qqg") //only works with twitch and yt link
+         .setDetails(messages[messageIndex]) 
+         .setName(NAME) 
+         .setState(state) 
+
+         .setStartTimestamp(startTimestamp) 
+         .setAssetsLargeImage(largeimage) 
+         .setAssetsLargeText(largeimagetext) 
+         .setAssetsSmallImage(small_image) 
+         .addButton(button_name1, button_link1) 
+         .addButton(button_name2, button_link2) 
+
+
+     client.user.setPresence({ activities: [rpc.toJSON()] });
+    messageIndex = (messageIndex + 1) % messages.length;
+    } catch (error) {
+     console.error('Failed :', error); 
+   } 
+
+   setTimeout(updatePresence, 3000);
+       } 
+
+
+
+const mySecret = process.env['TOKEN'];
+client.login(mySecret)
